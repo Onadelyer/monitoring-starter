@@ -1,0 +1,53 @@
+services:
+  my-exporter-one:
+    container_name: my-exporter-one
+    image: prom/node-exporter
+    command:
+      - "--collector.textfile.directory=/app"
+    networks:
+      - monitoring-starter
+
+  my-exporter-two:
+    container_name: my-exporter-two
+    build:
+      context: .
+      dockerfile: application.Dockerfile
+    networks:
+      - monitoring-starter
+    depends_on:
+      - my-exporter-one
+
+  prometheus-server:
+    container_name: prometheus-server
+    image: prom/prometheus
+    restart: unless-stopped
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - monitoring-starter
+    depends_on:
+      - my-exporter-two
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+    networks:
+      - monitoring-starter
+    depends_on:
+      - prometheus-server
+
+networks:
+  monitoring-starter:
+    name: monitoring-starter
+    driver: bridge
+
+volumes:
+  grafana-data:
+  

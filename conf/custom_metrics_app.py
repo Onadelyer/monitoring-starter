@@ -51,6 +51,7 @@ async def get_metrics():
 
     for city in city_coords:
         geoip.labels(
+            id=str(city["id"]),
             Location=city["city"],
             Latitude=str(city["latitude"]),
             Longitude=str(city["longitude"]),
@@ -59,6 +60,7 @@ async def get_metrics():
 
     for relation in datacenter_relations:
         relations.labels(
+            id=str(relation["id"]),
             source=str(relation["source"]),
             target=str(relation["target"])
         ).set(1)

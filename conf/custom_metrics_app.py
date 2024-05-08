@@ -31,7 +31,7 @@ random_metric1 = prometheus_client.Gauge("random_metric1", "Random metric 1")
 random_metric2 = prometheus_client.Gauge("random_metric2", "Random metric 2")
 random_metric3 = prometheus_client.Gauge("random_metric3", "Random metric 3")
 
-geoip = prometheus_client.Gauge("geoip_requests", "Number of requests to the GeoIP service", ["Location", "Latitude", "Longitude", "pair_id", "health"])
+geoip = prometheus_client.Gauge("geoip_requests", "Number of requests to the GeoIP service", ["Location", "Latitude", "Longitude", "pair_id"])
 
 population_increase = prometheus_client.Counter("population_increase", "An increasing metric", ["Gender"])
 
@@ -47,8 +47,7 @@ async def get_metrics():
             Latitude=str(city["latitude"]),
             Longitude=str(city["longitude"]),
             pair_id=str(city["pair_id"]),
-            health=random.randint(0, 100)
-        ).set(city["population"])
+        ).set(random.randint(1, 100))
 
     population_increase.labels(Gender="Female").inc(random.randint(1, 10))
     population_increase.labels(Gender="Male").inc(random.randint(1, 10))

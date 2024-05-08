@@ -39,8 +39,8 @@ random_metric1 = prometheus_client.Gauge("random_metric1", "Random metric 1")
 random_metric2 = prometheus_client.Gauge("random_metric2", "Random metric 2")
 random_metric3 = prometheus_client.Gauge("random_metric3", "Random metric 3")
 
-geoip = prometheus_client.Gauge("geoip_requests", "Number of requests to the GeoIP service", ["Location", "Latitude", "Longitude", "pair_id"])
-relations = prometheus_client.Gauge("datacenter_relations", "Number of relations between datacenters", ["source", "target"])
+geoip = prometheus_client.Gauge("geoip_requests", "Number of requests to the GeoIP service", ["id", "Location", "Latitude", "Longitude", "pair_id"])
+relations = prometheus_client.Gauge("datacenter_relations", "Number of relations between datacenters", ["id", "source", "target"])
 population_increase = prometheus_client.Counter("population_increase", "An increasing metric", ["Gender"])
 
 @app.get("/metrics")

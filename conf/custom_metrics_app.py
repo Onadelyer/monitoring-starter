@@ -19,11 +19,11 @@ city_coords = [
 ]
 
 datacenter_relations = [
-    {"id": 1, "source": 1, "target": 3},
-    {"id": 2, "source": 2, "target": 10},
-    {"id": 3, "source": 7, "target": 8},
-    {"id": 4, "source": 5, "target": 6},
-    {"id": 5, "source": 4, "target": 9}
+    {"datacenter_id": 1, "source": 1, "target": 3},
+    {"datacenter_id": 2, "source": 2, "target": 10},
+    {"datacenter_id": 3, "source": 7, "target": 8},
+    {"datacenter_id": 4, "source": 5, "target": 6},
+    {"datacenter_id": 5, "source": 4, "target": 9}
 ]
 
 app = FastAPI () 
@@ -40,7 +40,7 @@ random_metric2 = prometheus_client.Gauge("random_metric2", "Random metric 2")
 random_metric3 = prometheus_client.Gauge("random_metric3", "Random metric 3")
 
 geoip = prometheus_client.Gauge("geoip_requests", "Number of requests to the GeoIP service", ["id", "Location", "Latitude", "Longitude"])
-relations = prometheus_client.Gauge("datacenter_relations", "Number of relations between datacenters", ["id", "source", "target"])
+relations = prometheus_client.Gauge("datacenter_relations", "Number of relations between datacenters", ["datacenter_id", "source", "target"])
 population_increase = prometheus_client.Counter("population_increase", "An increasing metric", ["Gender"])
 
 @app.get("/metrics")
@@ -59,7 +59,7 @@ async def get_metrics():
 
     for relation in datacenter_relations:
         relations.labels(
-            id=str(relation["id"]),
+            datacenter_id=str(relation["datacenter_id"]),
             source=str(relation["source"]),
             target=str(relation["target"])
         ).set(1)

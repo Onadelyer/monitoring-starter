@@ -6,16 +6,16 @@ import prometheus_client
 import uvicorn
 
 city_coords = [
-    {"city": "Tokyo, Japan", "latitude": 35.6895, "longitude": 139.6917, "population": 37.434, "id": 1},
-    {"city": "Delhi, India", "latitude": 28.6139, "longitude": 77.2088,"population": 31.181, "id": 2},
-    {"city": "Shanghai, China", "latitude": 31.2304, "longitude": 121.4737, "population": 26.415, "id": 3},
-    {"city": "São Paulo, Brazil", "latitude": -23.5505, "longitude": -46.6333, "population": 12.3, "id": 4},
-    {"city": "Mexico City, Mexico", "latitude": 19.4326, "longitude": -99.1332, "population": 21.8, "id": 5},
-    {"city": "New York City, USA", "latitude": 40.7128, "longitude": -74.0059, "population": 8.8, "id": 6},
-    {"city": "London, UK", "latitude": 51.5098, "longitude": -0.1180, "population": 8.9, "id": 7},
-    {"city": "Paris, France", "latitude": 48.8566, "longitude": 2.3522, "population": 2.165, "id": 8},
-    {"city": "Buenos Aires, Argentina", "latitude": -34.8580, "longitude": -56.1771, "population": 15.091, "id": 9},
-    {"city": "Cairo, Egypt", "latitude": 30.0444, "longitude": 31.2357, "population": 20.4, "id": 10},
+    {"city": "Tokyo, Japan", "latitude": 35.6895, "longitude": 139.6917, "population": 37.434, "id": 1, "health": 30},
+    {"city": "Delhi, India", "latitude": 28.6139, "longitude": 77.2088,"population": 31.181, "id": 2, "health": 10},
+    {"city": "Shanghai, China", "latitude": 31.2304, "longitude": 121.4737, "population": 26.415, "id": 3, "health": 30},
+    {"city": "São Paulo, Brazil", "latitude": -23.5505, "longitude": -46.6333, "population": 12.3, "id": 4, "health": 10},
+    {"city": "Mexico City, Mexico", "latitude": 19.4326, "longitude": -99.1332, "population": 21.8, "id": 5, "health": 30},
+    {"city": "New York City, USA", "latitude": 40.7128, "longitude": -74.0059, "population": 8.8, "id": 6, "health": 10},
+    {"city": "London, UK", "latitude": 51.5098, "longitude": -0.1180, "population": 8.9, "id": 7, "health": 30},
+    {"city": "Paris, France", "latitude": 48.8566, "longitude": 2.3522, "population": 2.165, "id": 8, "health": 10},
+    {"city": "Buenos Aires, Argentina", "latitude": -34.8580, "longitude": -56.1771, "population": 15.091, "id": 9, "health": 30},
+    {"city": "Cairo, Egypt", "latitude": 30.0444, "longitude": 31.2357, "population": 20.4, "id": 10, "health": 10},
 ]
 
 datacenter_relations = [

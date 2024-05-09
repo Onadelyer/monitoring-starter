@@ -9,7 +9,7 @@ geoip_requests{Latitude="51.5098", Location="London, UK", Longitude="-0.118", id
 geoip_requests{Latitude="48.8566", Location="Paris, France", Longitude="2.3522", id="8", instance="my-exporter-two:9101", job="prometheus", pair_id="1"} value: 69
 geoip_requests{Latitude="-34.858", Location="Buenos Aires, Argentina", Longitude="-56.1771", id="9", instance="my-exporter-two:9101", job="prometheus", pair_id="5"} value: 92
 geoip_requests{Latitude="30.0444", Location="Cairo, Egypt", Longitude="31.2357", id="10", instance="my-exporter-two:9101", job="prometheus", pair_id="4"} value: 81
-datacenter_relations{id="1", instance="my-exporter-two:9101", job="prometheus", source="1", target="2"} value: 1
+datacenter_relations{id="1", instance="my-exporter-two:9101", job="prometheus", source="1", target="2"} value: 1id
 datacenter_relations{id="2", instance="my-exporter-two:9101", job="prometheus", source="3", target="4"} value: 1
 datacenter_relations{id="3", instance="my-exporter-two:9101", job="prometheus", source="5", target="6"} value: 1
 datacenter_relations{id="4", instance="my-exporter-two:9101", job="prometheus", source="7", target="8"} value: 1

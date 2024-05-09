@@ -55,7 +55,7 @@ async def get_metrics():
             Location=city["city"],
             Latitude=str(city["latitude"]),
             Longitude=str(city["longitude"]),
-        ).set(random.randint(1, 100))
+        ).set(city["health"])
 
     for relation in datacenter_relations:
         relations.labels(

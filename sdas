@@ -1,0 +1,16 @@
+
+geoip_requests{Latitude="35.6895", Location="Tokyo, Japan", Longitude="139.6917", id="1", instance="my-exporter-two:9101", job="prometheus", pair_id="3"} value: 40
+geoip_requests{Latitude="28.6139", Location="Delhi, India", Longitude="77.2088", id="2", instance="my-exporter-two:9101", job="prometheus", pair_id="4"} value: 63
+geoip_requests{Latitude="31.2304", Location="Shanghai, China", Longitude="121.4737", id="3", instance="my-exporter-two:9101", job="prometheus", pair_id="3"} value: 79
+geoip_requests{Latitude="-23.5505", Location="São Paulo, Brazil", Longitude="-46.6333", id="4", instance="my-exporter-two:9101", job="prometheus", pair_id="5"} value: 88
+geoip_requests{Latitude="19.4326", Location="Mexico City, Mexico", Longitude="-99.1332", id="5", instance="my-exporter-two:9101", job="prometheus", pair_id="2"} value: 86
+geoip_requests{Latitude="40.7128", Location="New York City, USA", Longitude="-74.0059", id="6", instance="my-exporter-two:9101", job="prometheus", pair_id="2"} value: 29
+geoip_requests{Latitude="51.5098", Location="London, UK", Longitude="-0.118", id="7", instance="my-exporter-two:9101", job="prometheus", pair_id="1"} value: 46
+geoip_requests{Latitude="48.8566", Location="Paris, France", Longitude="2.3522", id="8", instance="my-exporter-two:9101", job="prometheus", pair_id="1"} value: 69
+geoip_requests{Latitude="-34.858", Location="Buenos Aires, Argentina", Longitude="-56.1771", id="9", instance="my-exporter-two:9101", job="prometheus", pair_id="5"} value: 92
+geoip_requests{Latitude="30.0444", Location="Cairo, Egypt", Longitude="31.2357", id="10", instance="my-exporter-two:9101", job="prometheus", pair_id="4"} value: 81
+datacenter_relations{id="1", instance="my-exporter-two:9101", job="prometheus", source="1", target="2"} value: 1
+datacenter_relations{id="2", instance="my-exporter-two:9101", job="prometheus", source="3", target="4"} value: 1
+datacenter_relations{id="3", instance="my-exporter-two:9101", job="prometheus", source="5", target="6"} value: 1
+datacenter_relations{id="4", instance="my-exporter-two:9101", job="prometheus", source="7", target="8"} value: 1
+datacenter_relations{id="5", instance="my-exporter-two:9101", job="prometheus", source="9", target="10"} value: 1

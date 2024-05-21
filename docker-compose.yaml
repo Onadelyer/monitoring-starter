@@ -52,6 +52,8 @@ services:
       dockerfile: metrics-calculator.Dockerfile
     networks:
       - monitoring-starter
+    ports:
+      - "5000:5000"
     depends_on:
       - my-exporter-two
 

@@ -7,3 +7,4 @@ scrape_configs:
     static_configs:
       - targets: ['my-exporter-one:9100']
       - targets: ['my-exporter-two:9101']
+      - targets: ['metrics-calculator:5000']

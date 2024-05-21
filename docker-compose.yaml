@@ -45,6 +45,16 @@ services:
     depends_on:
       - prometheus-server
 
+  metrics-calculator:
+    container_name: metrics-calculator
+    build:
+      context: .
+      dockerfile: metrics-calculator.Dockerfile
+    networks:
+      - monitoring-starter
+    depends_on:
+      - my-exporter-two
+
 networks:
   monitoring-starter:
     name: monitoring-starter

@@ -26,24 +26,13 @@ datacenter_relations = [
     {"datacenter_id": 5, "source": 4, "target": 9}
 ]
 
-
-
 # Create a dictionary to easily access city information by id
 city_dict = {city["id"]: city for city in city_coords}
 
 # Create the third table
 third_table = []
 
-for relation in datacenter_relations:
-    source = city_dict[relation["source"]]
-    target = city_dict[relation["target"]]
-    
-    third_table.append({
-        "source_city": source["city"],
-        "source_health": source["health"],
-        "target_city": target["city"],
-        "target_health": target["health"]
-    })
+
 
 app = FastAPI () 
 
@@ -72,6 +61,17 @@ async def get_metrics():
     # Setting random health values between 0 and 100
     for city in city_coords:
         city['health'] = random.randint(0, 100)
+
+    for relation in datacenter_relations:
+        source = city_dict[relation["source"]]
+        target = city_dict[relation["target"]]
+        
+        third_table.append({
+            "source_city": source["city"],
+            "source_health": source["health"],
+            "target_city": target["city"],
+            "target_health": target["health"]
+        })
 
     for city in city_coords:
         geoip.labels(

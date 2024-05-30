@@ -26,9 +26,7 @@ datacenter_relations = [
     {"datacenter_id": 5, "source": 4, "target": 9}
 ]
 
-# Setting random health values between 0 and 100
-for city in city_coords:
-    city['health'] = random.randint(0, 100)
+
 
 # Create a dictionary to easily access city information by id
 city_dict = {city["id"]: city for city in city_coords}
@@ -71,6 +69,9 @@ async def get_metrics():
     random_metric2.set(float(random.random() * 10) + 1)
     random_metric3.set(float(random.random() * 10) + 1)
 
+    # Setting random health values between 0 and 100
+    for city in city_coords:
+        city['health'] = random.randint(0, 100)
 
     for city in city_coords:
         geoip.labels(

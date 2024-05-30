@@ -26,6 +26,23 @@ datacenter_relations = [
     {"datacenter_id": 5, "source": 4, "target": 9}
 ]
 
+# Create a dictionary to easily access city information by id
+city_dict = {city["id"]: city for city in city_coords}
+
+# Create the third table
+third_table = []
+
+for relation in datacenter_relations:
+    source = city_dict[relation["source"]]
+    target = city_dict[relation["target"]]
+    
+    third_table.append({
+        "source_city": source["city"],
+        "source_health": source["health"],
+        "target_city": target["city"],
+        "target_health": target["health"]
+    })
+
 app = FastAPI () 
 
 app.add_middleware( 
@@ -42,6 +59,7 @@ random_metric3 = prometheus_client.Gauge("random_metric3", "Random metric 3")
 geoip = prometheus_client.Gauge("geoip_requests", "Number of requests to the GeoIP service", ["id", "Location", "Latitude", "Longitude"])
 relations = prometheus_client.Gauge("datacenter_relations", "Number of relations between datacenters", ["datacenter_id", "source", "target"])
 population_increase = prometheus_client.Counter("population_increase", "An increasing metric", ["Gender"])
+datacenters = prometheus_client.Gauge("datacenter_pairs", "Datacenter Pairs Metrics", ["pair_id", "source_location", "target_location", "source_health", "target_health"])
 
 @app.get("/metrics")
 async def get_metrics():
@@ -63,6 +81,14 @@ async def get_metrics():
             source=str(relation["source"]),
             target=str(relation["target"])
         ).set(1)
+
+    for pair in third_table:
+        datacenters.labels(
+            source_location=pair["source_city"],
+            target_location=pair["target_city"],
+            source_health=pair["source_health"],
+            target_health=pair["target_health"]
+        ).set((pair["source_health"] + pair["target_health"]) / 2)
 
     population_increase.labels(Gender="Female").inc(random.randint(1, 10))
     population_increase.labels(Gender="Male").inc(random.randint(1, 10))

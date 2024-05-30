@@ -84,6 +84,7 @@ async def get_metrics():
 
     for pair in third_table:
         datacenters.labels(
+            pair_id=f"{pair['source_city']}_{pair['target_city']}",
             source_location=pair["source_city"],
             target_location=pair["target_city"],
             source_health=pair["source_health"],

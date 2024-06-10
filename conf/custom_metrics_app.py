@@ -5,32 +5,37 @@ from fastapi.middleware.cors import CORSMiddleware
 import prometheus_client
 import uvicorn
 
-city_coords = [
-    {"city": "Tokyo, Japan", "latitude": 35.6895, "longitude": 139.6917, "population": 37.434, "id": 1, "health": 30},
-    {"city": "Delhi, India", "latitude": 28.6139, "longitude": 77.2088,"population": 31.181, "id": 2, "health": 10},
-    {"city": "Shanghai, China", "latitude": 31.2304, "longitude": 121.4737, "population": 26.415, "id": 3, "health": 30},
-    {"city": "São Paulo, Brazil", "latitude": -23.5505, "longitude": -46.6333, "population": 12.3, "id": 4, "health": 10},
-    {"city": "Mexico City, Mexico", "latitude": 19.4326, "longitude": -99.1332, "population": 21.8, "id": 5, "health": 30},
-    {"city": "New York City, USA", "latitude": 40.7128, "longitude": -74.0059, "population": 8.8, "id": 6, "health": 10},
-    {"city": "London, UK", "latitude": 51.5098, "longitude": -0.1180, "population": 8.9, "id": 7, "health": 30},
-    {"city": "Paris, France", "latitude": 48.8566, "longitude": 2.3522, "population": 2.165, "id": 8, "health": 10},
-    {"city": "Buenos Aires, Argentina", "latitude": -34.8580, "longitude": -56.1771, "population": 15.091, "id": 9, "health": 30},
-    {"city": "Cairo, Egypt", "latitude": 30.0444, "longitude": 31.2357, "population": 20.4, "id": 10, "health": 10},
+metrics = [
+    {"dc": "cnhe-ash1.edc", "env": "prod", "instance": "54.85.230.153:9100", "ip": "54.85.230.153", "job": "nnie2emon", "org_id": "4639274", "region": "us-east-1", "team": "cnhe", "value": 18.894144},
+    {"dc": "cnhe-atl1.edc", "env": "prod", "instance": "54.85.230.153:9100", "ip": "54.85.230.153", "job": "nnie2emon", "org_id": "4639274", "region": "us-east-1", "team": "cnhe", "value": 14.5764},
+    {"dc": "cnhe-cdg1.edc", "env": "prod", "instance": "15.188.223.30:9100", "ip": "15.188.223.30", "job": "nnie2emon", "org_id": "4639274", "region": "eu-west-3", "team": "cnhe", "value": 14.501176},
+    {"dc": "cnhe-chi1.edc", "env": "prod", "instance": "3.136.6.6:9100", "ip": "3.136.6.6", "job": "nnie2emon", "org_id": "4639274", "region": "us-east-2", "team": "cnhe", "value": 20.161592},
+    {"dc": "cnhe-cph1.edc", "env": "prod", "instance": "15.188.223.30:9100", "ip": "15.188.223.30", "job": "nnie2emon", "org_id": "4639274", "region": "eu-west-3", "team": "cnhe", "value": 18.015432},
+    {"dc": "cnhe-den1.edc", "env": "prod", "instance": "54.241.60.9:9100", "ip": "54.241.60.9", "job": "nnie2emon", "org_id": "4639274", "region": "us-west-1", "team": "cnhe", "value": 17.366592},
+    {"dc": "cnhe-dfw1.edc", "env": "prod", "instance": "54.85.230.153:9100", "ip": "54.85.230.153", "job": "nnie2emon", "org_id": "4639274", "region": "us-east-1", "team": "cnhe", "value": 17.957824},
+    {"dc": "cnhe-fra1.edc", "env": "prod", "instance": "52.211.81.150:9100", "ip": "52.211.81.150", "job": "nnie2emon", "org_id": "4639274", "region": "eu-west-1", "team": "cnhe", "value": 17.374056},
+    {"dc": "cnhe-lax1-cicd.edc", "env": "prod", "instance": "15.156.21.209:9100", "ip": "15.156.21.209", "job": "nnie2emon", "org_id": "4639274", "region": "ca-central-1", "team": "cnhe", "value": 0},
+    {"dc": "cnhe-lax1.edc", "env": "prod", "instance": "54.241.60.9:9100", "ip": "54.241.60.9", "job": "nnie2emon", "org_id": "4639274", "region": "us-west-1", "team": "cnhe", "value": 16.430512},
+    {"dc": "cnhe-lon1.edc", "env": "prod", "instance": "15.188.223.30:9100", "ip": "15.188.223.30", "job": "nnie2emon", "org_id": "4639274", "region": "eu-west-3", "team": "cnhe", "value": 21.092928},
+    {"dc": "cnhe-mad1.edc", "env": "prod", "instance": "15.188.223.30:9100", "ip": "15.188.223.30", "job": "nnie2emon", "org_id": "4639274", "region": "eu-west-3", "team": "cnhe", "value": 16.719928},
+    {"dc": "cnhe-mel1.edc", "env": "prod", "instance": "52.220.222.213:9100", "ip": "52.220.222.213", "job": "nnie2emon", "org_id": "4639274", "region": "ap-southeast-1", "team": "cnhe", "value": 13.664672},
+    {"dc": "cnhe-mia1.edc", "env": "prod", "instance": "3.136.6.6:9100", "ip": "3.136.6.6", "job": "nnie2emon", "org_id": "4639274", "region": "us-east-2", "team": "cnhe", "value": 15.893448},
+    {"dc": "cnhe-mil1.edc", "env": "prod", "instance": "52.211.81.150:9100", "ip": "52.211.81.150", "job": "nnie2emon", "org_id": "4639274", "region": "eu-west-1", "team": "cnhe", "value": 14.379496},
+    {"dc": "cnhe-min1.edc", "env": "prod", "instance": "54.85.230.153:9100", "ip": "54.85.230.153", "job": "nnie2emon", "org_id": "4639274", "region": "us-east-1", "team": "cnhe", "value": 18.42728},
+    {"dc": "cnhe-mrs1.edc", "env": "prod", "instance": "52.211.81.150:9100", "ip": "52.211.81.150", "job": "nnie2emon", "org_id": "4639274", "region": "eu-west-1", "team": "cnhe", "value": 15.020696},
+    {"dc": "cnhe-nrt2.edc", "env": "prod", "instance": "35.73.247.36:9100", "ip": "35.73.247.36", "job": "nnie2emon", "org_id": "4639274", "region": "ap-northeast-1", "team": "cnhe", "value": 18.642992},
+    {"dc": "cnhe-nyc1.edc", "env": "prod", "instance": "3.136.6.6:9100", "ip": "3.136.6.6", "job": "nnie2emon", "org_id": "4639274", "region": "us-east-2", "team": "cnhe", "value": 20.635024},
+    {"dc": "cnhe-pao1-cicd.edc", "env": "prod", "instance": "15.156.21.209:9100", "ip": "15.156.21.209", "job": "nnie2emon", "org_id": "4639274", "region": "ca-central-1", "team": "cnhe", "value": 0},
+    {"dc": "cnhe-pao1.edc", "env": "prod", "instance": "44.231.169.158:9100", "ip": "44.231.169.158", "job": "nnie2emon", "org_id": "4639274", "region": "us-west-2", "team": "cnhe", "value": 19.051648},
+    {"dc": "cnhe-rio1.edc", "env": "prod", "instance": "54.85.230.153:9100", "ip": "54.85.230.153", "job": "nnie2emon", "org_id": "4639274", "region": "us-east-1", "team": "cnhe", "value": 20.030528},
+    {"dc": "cnhe-sao1.edc", "env": "prod", "instance": "18.231.229.212:9100", "ip": "18.231.229.212", "job": "nnie2emon", "org_id": "4639274", "region": "sa-east-1", "team": "cnhe", "value": 16.415176},
+    {"dc": "cnhe-sin1.edc", "env": "prod", "instance": "52.220.222.213:9100", "ip": "52.220.222.213", "job": "nnie2emon", "org_id": "4639274", "region": "ap-southeast-1", "team": "cnhe", "value": 15.456824},
+    {"dc": "cnhe-sto1.edc", "env": "prod", "instance": "52.211.81.150:9100", "ip": "52.211.81.150", "job": "nnie2emon", "org_id": "4639274", "region": "eu-west-1", "team": "cnhe", "value": 17.667136},
+    {"dc": "cnhe-syd1.edc", "env": "prod", "instance": "54.206.88.92:9100", "ip": "54.206.88.92", "job": "nnie2emon", "org_id": "4639274", "region": "ap-southeast-2", "team": "cnhe", "value": 18.390616},
+    {"dc": "cnhe-yvr1.edc", "env": "prod", "instance": "54.241.60.9:9100", "ip": "54.241.60.9", "job": "nnie2emon", "org_id": "4639274", "region": "us-west-1", "team": "cnhe", "value": 17.609064},
+    {"dc": "cnhe-yyz1.edc", "env": "prod", "instance": "54.85.230.153:9100", "ip": "54.85.230.153", "job": "nnie2emon", "org_id": "4639274", "region": "us-east-1", "team": "cnhe", "value": 17.23},
+    {"dc": "lab-sjc4-cicd.edc", "env": "dev", "instance": "15.156.21.209:9100", "ip": "15.156.21.209", "job": "nnie2emon", "org_id": "4639274", "region": "ca-central-1", "team": "cnhe", "value": 0}
 ]
-
-datacenter_relations = [
-    {"datacenter_id": 1, "source": 1, "target": 3},
-    {"datacenter_id": 2, "source": 2, "target": 10},
-    {"datacenter_id": 3, "source": 7, "target": 8},
-    {"datacenter_id": 4, "source": 5, "target": 6},
-    {"datacenter_id": 5, "source": 4, "target": 9}
-]
-
-# Create a dictionary to easily access city information by id
-city_dict = {city["id"]: city for city in city_coords}
-
-# Create the third table
-third_table = []
 
 app = FastAPI () 
 
@@ -41,64 +46,21 @@ app.add_middleware(
     allow_headers= ["*"],
 )
 
-random_metric1 = prometheus_client.Gauge("random_metric1", "Random metric 1")
-random_metric2 = prometheus_client.Gauge("random_metric2", "Random metric 2")
-random_metric3 = prometheus_client.Gauge("random_metric3", "Random metric 3")
-
-geoip = prometheus_client.Gauge("geoip_requests", "Number of requests to the GeoIP service", ["id", "Location", "Latitude", "Longitude"])
-relations = prometheus_client.Gauge("datacenter_relations", "Number of relations between datacenters", ["datacenter_id", "source", "target"])
-population_increase = prometheus_client.Counter("population_increase", "An increasing metric", ["Gender"])
-datacenters = prometheus_client.Gauge("datacenter_pairs", "Datacenter Pairs Metrics", ["pair_id", "source_location", "target_location", "source_health", "target_health"])
+metricss = prometheus_client.Gauge("test_metrics", "Description", ["dc", "env", "instance", "ip", "job", "org_id", "region", "team"])
 
 @app.get("/metrics")
 async def get_metrics():
-    random_metric1.set(float(random.random() * 10) + 1)
-    random_metric2.set(float(random.random() * 10) + 1)
-    random_metric3.set(float(random.random() * 10) + 1)
-
-    # Setting random health values between 0 and 100
-    for city in city_coords:
-        city['health'] = random.randint(0, 100)
-
-    third_table.clear()
-
-    for relation in datacenter_relations:
-        source = city_dict[relation["source"]]
-        target = city_dict[relation["target"]]
-        
-        third_table.append({
-            "source_city": source["city"],
-            "source_health": source["health"],
-            "target_city": target["city"],
-            "target_health": target["health"]
-        })
-
-    for city in city_coords:
-        geoip.labels(
-            id=str(city["id"]),
-            Location=city["city"],
-            Latitude=str(city["latitude"]),
-            Longitude=str(city["longitude"]),
-        ).set(city["health"])
-
-    for relation in datacenter_relations:
-        relations.labels(
-            datacenter_id=str(relation["datacenter_id"]),
-            source=str(relation["source"]),
-            target=str(relation["target"])
-        ).set(1)
-
-    for pair in third_table:
-        datacenters.labels(
-            pair_id=f"{pair['source_city']}_{pair['target_city']}",
-            source_location=pair["source_city"],
-            target_location=pair["target_city"],
-            source_health=pair["source_health"],
-            target_health=pair["target_health"]
-        ).set((pair["source_health"] + pair["target_health"]) / 2)
-
-    population_increase.labels(Gender="Female").inc(random.randint(1, 10))
-    population_increase.labels(Gender="Male").inc(random.randint(1, 10))
+    for metric in metrics:
+        metricss.labels(
+            dc=metric["dc"],
+            env=metric["env"],
+            instance=metric["instance"],
+            ip=metric["ip"],
+            job=metric["job"],
+            org_id=metric["org_id"],
+            region=metric["region"],
+            team=metric["team"]
+        ).set(metric["value"])
 
     return Response(
         media_type = "text/plain",

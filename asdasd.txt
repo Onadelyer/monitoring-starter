@@ -1,0 +1,167 @@
+{{#each (regions)}}
+    <div class="region">
+        <div class="region-name" onclick="toggleContent(this)">
+            <div>{{this.region}}</div>
+            <div>Region SLO: {{this.value}}</div>
+        </div>
+        {{#each (pairs this.region)}}
+        <div class="datacenter-pair">{{dc}}</div>
+        {{/each}}
+    </div>
+{{/each}}
+
+toggleContent = (element) => {
+  // Find the parent <div class="region"> of the clicked element
+  const parent = element.closest('.region');
+
+  // Select all elements with the class "datacenter-pair" within this parent
+  const datacenterPairs = parent.querySelectorAll('.datacenter-pair');
+
+  console.log(context.data.data);
+
+  // Toggle the display style of each "datacenter-pair" element
+  datacenterPairs.forEach(pair => {
+    // Check the current display style and toggle it
+    if (pair.style.display === 'none' || pair.style.display === '') {
+      pair.style.display = 'block';
+    } else {
+      pair.style.display = 'none';
+    }
+  });
+};
+
+context.handlebars.registerHelper("regions", () => {
+  const uniqueRegions = new Set(context.data.data.map(element => JSON.stringify({
+    region: element.region,
+    value: Math.trunc(element["Value #Regions"])
+  })));
+
+  return Array.from(uniqueRegions).map(item => JSON.parse(item));
+});
+
+context.handlebars.registerHelper("pairs", (region) => {
+  return [...new Map(context.data.data.filter(element => element.region === region).map(item => [item['dc'], item])).values()];
+});
+
+& * {
+    padding: 0;
+    margin: 0;
+}
+
+.region {
+    background-color: #434343;
+    margin: 0;
+}
+
+.region-name {
+    background-color: #606060;
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+
+    display:flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.datacenter-pair {
+    display: none;
+    color: white;
+    background-color: #2F2F2F;
+    padding: 10px;
+    font-size: 14px;
+    margin-left: 30px;
+}
+
+
+
+toggleContent = (element) => {
+  // Find the parent <div class="region"> of the clicked element
+  const parent = element.closest('.region');
+
+  // Select all elements with the class "datacenter-pair" within this parent
+  const datacenterPairs = parent.querySelectorAll('.datacenter-pair');
+
+  console.log(context.data.data);
+
+  // Toggle the display style of each "datacenter-pair" element
+  datacenterPairs.forEach(pair => {
+    // Check the current display style and toggle it
+    if (pair.style.display === 'none' || pair.style.display === '') {
+      pair.style.display = 'flex';
+    } else {
+      pair.style.display = 'none';
+    }
+  });
+};
+
+function resizeArray(arr, targetSize) {
+  const originalSize = arr.length;
+
+  if (originalSize === targetSize) {
+    return arr;
+  }
+
+  const result = [];
+
+  if (originalSize > targetSize) {
+    const step = (originalSize - 1) / (targetSize - 1);
+    for (let i = 0; i < targetSize; i++) {
+      const index = i * step;
+      const lower = Math.floor(index);
+      const upper = Math.ceil(index);
+      const fraction = index - lower;
+      result.push(arr[lower] * (1 - fraction) + arr[upper] * fraction);
+    }
+  }
+  else {
+    const step = (originalSize - 1) / (targetSize - 1);
+    for (let i = 0; i < targetSize; i++) {
+      const index = i / (targetSize - 1) * (originalSize - 1);
+      const lower = Math.floor(index);
+      const upper = Math.ceil(index);
+      const fraction = index - lower;
+      result.push(arr[lower] * (1 - fraction) + arr[upper] * fraction);
+    }
+  }
+
+  return result;
+}
+
+function generateBarChartHtml(data) {
+  const maxValue = Math.max(...data);
+
+  let chartHtml = '<div style="display: flex; align-items: flex-end; height: 60px; border: 1px solid #000;">';
+
+  data.forEach(value => {
+    const barHeight = (value / maxValue) * 100;
+    chartHtml += `<div style="width: 10px; background-color: green; height: ${barHeight}%;"></div>`;
+  });
+
+  chartHtml += '</div>';
+
+  return chartHtml;
+}
+
+context.handlebars.registerHelper("regions", () => {
+  const uniqueRegions = new Set(context.data.data.map(element => JSON.stringify({
+    region: element.region,
+    value: Math.trunc(element["Value #Regions"])
+  })));
+
+  return Array.from(uniqueRegions).map(item => JSON.parse(item));
+});
+
+context.handlebars.registerHelper("pairs", (region) => {
+  return [...new Map(context.data.data.filter(element => element.region === region).map(item => [item['dc'], item])).values()];
+});
+
+context.handlebars.registerHelper("formatint", (int) => {
+  console.log(int)
+  return Math.trunc(parseInt(int));
+});
+
+context.handlebars.registerHelper("generatedbars", (dc) => {
+  console.log(context.data.data.filter(element => element.dc == dc).map(element => element.dcval));
+  return generateBarChartHtml(context.data.data.filter(element => element.dc == dc).map(element => element.dcval));
+});

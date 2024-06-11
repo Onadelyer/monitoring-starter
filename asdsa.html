@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+
+</head>
+<body>
+
+
+    <script>
+function generateBarChartHtml(data) {
+    // Calculate the maximum value in the data array
+    const maxValue = Math.max(...data);
+
+    // Generate the HTML for the bar chart
+    let chartHtml = '<div style="display: flex; align-items: flex-end; height: 200px; border: 1px solid #000; padding: 5px;">';
+
+    data.forEach(value => {
+        // Calculate the height of each bar as a percentage of the max value
+        const barHeight = (value / maxValue) * 100;
+        chartHtml += `<div style="width: 20px; margin-right: 5px; background-color: blue; height: ${barHeight}%;"></div>`;
+    });
+
+    chartHtml += '</div>';
+
+    return chartHtml;
+}
+
+// Example usage
+const data = [5, 10, 15, 20, 25, 20, 25, 20, 25, 20, 25, 20, 25, 20, 25, 20, 25, 20, 25, 20, 25];
+document.body.innerHTML = generateBarChartHtml(data);
+
+    </script>
+</body>
+</html>

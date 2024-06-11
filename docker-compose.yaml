@@ -35,7 +35,6 @@ services:
     image: grafana/grafana
     restart: unless-stopped
     environment:
-      - GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS=panodata-map-panel
       - GF_PANELS_DISABLE_SANITIZE_HTML=true
     ports:
       - "3000:3000"

@@ -60,7 +60,7 @@ async def get_metrics():
             org_id=metric["org_id"],
             region=metric["region"],
             team=metric["team"]
-        ).set(random.random(100))
+        ).set(metric["value"])
 
     return Response(
         media_type = "text/plain",

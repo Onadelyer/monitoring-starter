@@ -1,6 +1,7 @@
 import random
 
 from fastapi import FastAPI, HTTPException, Response 
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import prometheus_client
 import uvicorn
@@ -66,6 +67,49 @@ async def get_metrics():
         media_type = "text/plain",
         content = prometheus_client.generate_latest()
     )
+
+def generate_random_numbers(count, min_value=0, max_value=100):
+    return [random.randint(min_value, max_value) for _ in range(count)]
+
+def calculate_region_health(dcs_list):
+    num_dcs = len(dcs_list)
+    num_metrics = len(next(iter(dcs_list.values()))[0])
+    
+    region_health_array = []
+    for i in range(num_metrics):
+        avg_value = sum(dcs_list[dc][0][i] for dc in dcs_list) / num_dcs
+        region_health_array.append(avg_value)
+    
+    # Calculate the additional number
+    additional_number = sum(dcs_list[dc][1] for dc in dcs_list) / num_dcs
+    
+    return (region_health_array, additional_number)
+
+@app.get("/testjson")
+async def getjson():
+    num_metrics = 20
+    
+    us_west_1_dcs = {
+        "ash1.edc": (generate_random_numbers(num_metrics), random.randint(0, 100)),
+        "lon1.edc": (generate_random_numbers(num_metrics), random.randint(0, 100))
+    }
+    us_west_2_dcs = {
+        "mad1.edc": (generate_random_numbers(num_metrics), random.randint(0, 100)),
+        "mil1.edc": (generate_random_numbers(num_metrics), random.randint(0, 100)),
+        "nyc1.edc": (generate_random_numbers(num_metrics), random.randint(0, 100))
+    }
+    
+    data = {
+        "us_west_1": {
+            "region_health": calculate_region_health(us_west_1_dcs),
+            "dcs_list": us_west_1_dcs
+        },
+        "us_west_2": {
+            "region_health": calculate_region_health(us_west_2_dcs),
+            "dcs_list": us_west_2_dcs
+        }
+    }
+    return JSONResponse(content=data)
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=9101)

@@ -110,7 +110,13 @@ async def getjson():
             "dcs_list": us_west_2_dcs
         }
     }
+    
     formatted_data = json.dumps(data, indent=4)
+    formatted_data = re.sub(r'\[\s+(\d)', r'[\1', formatted_data)
+    formatted_data = re.sub(r',\s+(\d)', r', \1', formatted_data)
+    formatted_data = re.sub(r'(\d)\s+\]', r'\1]', formatted_data)
+    formatted_data = re.sub(r'(\d)\s+\]', r'\1]', formatted_data)
+
     return Response(content=formatted_data, media_type="application/json")
 
 if __name__ == "__main__":

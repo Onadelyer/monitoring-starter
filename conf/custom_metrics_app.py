@@ -5,6 +5,7 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import prometheus_client
 import uvicorn
+import re
 import json
 
 metrics = [

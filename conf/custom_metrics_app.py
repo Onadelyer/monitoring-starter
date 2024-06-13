@@ -79,11 +79,11 @@ def calculate_region_health(dcs_list):
     
     region_health_array = []
     for i in range(num_metrics):
-        avg_value = sum(dcs_list[dc][0][i] for dc in dcs_list) / num_dcs
+        avg_value = round(sum(dcs_list[dc][0][i] for dc in dcs_list) / num_dcs)
         region_health_array.append(avg_value)
     
     # Calculate the additional number
-    additional_number = sum(dcs_list[dc][1] for dc in dcs_list) / num_dcs
+    additional_number = round(sum(dcs_list[dc][1] for dc in dcs_list) / num_dcs)
     
     return (region_health_array, additional_number)
 

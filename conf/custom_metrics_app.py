@@ -112,13 +112,7 @@ async def getjson():
         }
     }
     
-    formatted_data = json.dumps(data, indent=4)
-    formatted_data = re.sub(r'\[\s+(\d)', r'[\1', formatted_data)
-    formatted_data = re.sub(r',\s+(\d)', r', \1', formatted_data)
-    formatted_data = re.sub(r'(\d)\s+\]', r'\1]', formatted_data)
-    formatted_data = re.sub(r'(\d)\s+\]', r'\1]', formatted_data)
-
-    return Response(content=formatted_data, media_type="application/json")
+    return JSONResponse(content=data)
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=9101)

@@ -102,14 +102,18 @@ async def getjson():
     }
     
     data = {
-        "us_west_1": {
-            "region_health": calculate_region_health(us_west_1_dcs),
-            "dcs_list": us_west_1_dcs
-        },
-        "us_west_2": {
-            "region_health": calculate_region_health(us_west_2_dcs),
-            "dcs_list": us_west_2_dcs
-        }
+        "dc_pairs": [
+            {
+                "pair_name": "us_west_1",
+                "region_health": calculate_region_health(us_west_1_dcs),
+                "dcs_list": us_west_1_dcs
+            },
+            {
+                "pair_name": "us_west_2",
+                "region_health": calculate_region_health(us_west_2_dcs),
+                "dcs_list": us_west_2_dcs
+            }
+        ]
     }
     
     return JSONResponse(content=data)

@@ -5,6 +5,7 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import prometheus_client
 import uvicorn
+import json
 
 metrics = [
     {"dc": "cnhe-ash1.edc", "env": "prod", "instance": "54.85.230.153:9100", "ip": "54.85.230.153", "job": "nnie2emon", "org_id": "4639274", "region": "us-east-1", "team": "cnhe", "value": 18.894144},
@@ -109,7 +110,8 @@ async def getjson():
             "dcs_list": us_west_2_dcs
         }
     }
-    return JSONResponse(content=data, indent=4)
+    formatted_data = json.dumps(data, indent=4)
+    return Response(content=formatted_data, media_type="application/json")
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=9101)

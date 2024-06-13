@@ -1,0 +1,4 @@
+docker-compose down
+docker image rm monitoring-starter-my-exporter-two
+git pull origin
+docker-compose up -d

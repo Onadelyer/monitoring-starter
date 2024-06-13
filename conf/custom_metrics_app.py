@@ -109,7 +109,7 @@ async def getjson():
             "dcs_list": us_west_2_dcs
         }
     }
-    return JSONResponse(content=data)
+    return JSONResponse(content=data, indent=4)
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=9101)

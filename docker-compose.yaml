@@ -40,6 +40,7 @@ services:
       - GF_PANELS_DISABLE_SANITIZE_HTML=true
     ports:
       - "3000:3000"
+      - "9101:9101"
     volumes:
       - grafana-data:/var/lib/grafana
     networks:
